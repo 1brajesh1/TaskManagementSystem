@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-TaskManagementSystem-7337595B-D793-403A-AD6C-6D49BBADA84B</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Enum\**" />
+    <Compile Remove="Migrations\**" />
+    <Compile Remove="NewFolder1\**" />
+    <Content Remove="Data\Migrations\**" />
+    <Content Remove="Enum\**" />
+    <Content Remove="Migrations\**" />
+    <Content Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <None Remove="Data\Migrations\**" />
+    <None Remove="Enum\**" />
+    <None Remove="Migrations\**" />
+    <None Remove="NewFolder1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\Tasks.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Data\Migrations\ApplicationDbContextModelSnapshot.cs" />
+    <Compile Include="Migrations\20220105072546_initial.cs" />
+    <Compile Include="Migrations\20220105072546_initial.Designer.cs" />
+    <Compile Include="Migrations\20220105083412_initialdatabase.cs" />
+    <Compile Include="Migrations\20220105083412_initialdatabase.Designer.cs" />
+    <Compile Include="Migrations\20220106111856_taskenum.cs" />
+    <Compile Include="Migrations\20220106111856_taskenum.Designer.cs" />
+    <Compile Include="Migrations\20220107052945_taskcategoryadded.cs" />
+    <Compile Include="Migrations\20220107052945_taskcategoryadded.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.18" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.18" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.18" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+</Project>

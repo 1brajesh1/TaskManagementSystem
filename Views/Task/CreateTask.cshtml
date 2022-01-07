@@ -1,0 +1,84 @@
+﻿@using TaskManagementSystem.Enums
+
+
+@model TaskManagementSystem.Models.Task
+
+@{
+    ViewData["Title"] = "CreateTask";
+}
+
+<h1>CreateTask</h1>
+
+<h4>Task</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateTask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TaskName" class="control-label"></label>
+                <input asp-for="TaskName" class="form-control" />
+                <span asp-validation-for="TaskName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskDetails" class="control-label"></label>
+                <input asp-for="TaskDetails" class="form-control" />
+                <span asp-validation-for="TaskDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssignedDate" class="control-label"></label>
+                <input asp-for="AssignedDate" class="form-control" />
+                <span asp-validation-for="AssignedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label"></label>
+                <input asp-for="DueDate" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssignedBy" class="control-label"></label>
+                @*<input asp-for="AssignedBy" class="form-control" />*@
+                @*<select id="Select1" asp-items="@(new SelectList(@ViewBag.message,"Taskid","Assignby"))">
+                        <option> SignIn Username </option>
+
+                    </select>*@
+                <select name="AssignedBy" class="form-control" asp-items="@ViewBag.users"></select>
+
+
+                <span asp-validation-for="AssignedBy" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskStatusEnum" class="control-label"></label>
+                @*<input asp-for="TaskStatus" class="form-control" />*@
+                <select asp-for="TaskStatusEnum" class="form-control" asp-items="Html.GetEnumSelectList<TaskStatusEnum>()">
+                    <option value="">Please Select the Status of the Task</option>
+
+                </select>
+
+                <span asp-validation-for="TaskStatusEnum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskCompletedDate" class="control-label"></label>
+                <input asp-for="TaskCompletedDate" class="form-control" />
+                <span asp-validation-for="TaskCompletedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
