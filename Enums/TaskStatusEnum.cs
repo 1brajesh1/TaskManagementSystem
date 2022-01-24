@@ -7,8 +7,10 @@ namespace TaskManagementSystem.Enums
 {
     public enum TaskStatusEnum
     {
+            NotStarted,
             InProgress,
             NotCompleted,
             Completed
     }
 }
+    

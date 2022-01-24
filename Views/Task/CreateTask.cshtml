@@ -1,7 +1,9 @@
 ﻿@using TaskManagementSystem.Enums
 
 
-@model TaskManagementSystem.Models.Task
+
+@*@model TaskManagementSystem.Models.Task*@
+@model TaskManagementSystem.ViewModels.TaskViewModel
 
 @{
     ViewData["Title"] = "CreateTask";
@@ -28,6 +30,7 @@
             <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
                 <input asp-for="CreatedDate" class="form-control" />
+                @* <input asp-for="CreatedDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />*@
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,29 +43,47 @@
                 <input asp-for="DueDate" class="form-control" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+                    <label asp-for="AssignedBy" class="control-label"></label>
+                    <select name="AssignedBy" class="form-control" asp-items="@ViewBag.users"></select>
+                    <span asp-validation-for="AssignedBy" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
-                <label asp-for="AssignedBy" class="control-label"></label>
-                @*<input asp-for="AssignedBy" class="form-control" />*@
-                @*<select id="Select1" asp-items="@(new SelectList(@ViewBag.message,"Taskid","Assignby"))">
-                        <option> SignIn Username </option>
+                <label asp-for="AssignedById" class="control-label"></label>
+                @*<select name="AssignedById" class="form-control" asp-items="@(new SelectList(ViewBag.users, "Value","Text"))">*@
+                <select asp-for="AssignedById" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))">
 
-                    </select>*@
-                <select name="AssignedBy" class="form-control" asp-items="@ViewBag.users"></select>
+                    <option selected disabled>Please Select</option>
+                </select>
+                <span asp-validation-for="AssignedById" class="text-danger"></span>
+            </div>
 
-
-                <span asp-validation-for="AssignedBy" class="text-danger"></span>
-
+            <div class="form-group">
+                <label asp-for="AssignedTo" class="control-label"></label>
+                @* <select name="AssignedTo" class="form-control" asp-items="@ViewBag.users" multiple>*@
+                <select asp-for="AssignedTo" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))" multiple>
+                    <option selected disabled>Please Select Multiple User by Holding CTRL</option>
+                </select>
+                <span asp-validation-for="AssignedTo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TaskStatusEnum" class="control-label"></label>
-                @*<input asp-for="TaskStatus" class="form-control" />*@
-                <select asp-for="TaskStatusEnum" class="form-control" asp-items="Html.GetEnumSelectList<TaskStatusEnum>()">
-                    <option value="">Please Select the Status of the Task</option>
-
+                <label asp-for="TaskCategoriesId" class="control-label"></label>
+                <select asp-for="TaskCategoriesId" class="form-control" asp-items="@(new SelectList(Model.TaskCategories, "Value", "Text"))">
+                    <option selected disabled>Please Select the category</option>
                 </select>
 
-                <span asp-validation-for="TaskStatusEnum" class="text-danger"></span>
+                <span asp-validation-for="TaskCategoriesId" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="TaskStatus" class="control-label"></label>
+                <select asp-for="TaskStatus" class="form-control" asp-items="Html.GetEnumSelectList<TaskStatusEnum>()">
+                    <option selected disabled>Please Select the Status of the Task</option>
+
+                </select>
+                <span asp-validation-for="TaskStatus" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="TaskCompletedDate" class="control-label"></label>
                 <input asp-for="TaskCompletedDate" class="form-control" />
@@ -76,9 +97,12 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+
+    <a asp-action="ViewTask">Back to List or ViewTask</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   
+    
 }
