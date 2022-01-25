@@ -61,10 +61,12 @@ namespace TaskManagementSystem.Models
         public virtual TaskCategory TaskCategory { get; set; }
         //public TaskCategory TaskCategory { get; set; }
 
-        [Required]
+        //[Required]
         public List<ApplicationUser> AssignedTo { get; set; }
 
-        public List<UserVsTask> UserVsTasks { get; set; }
+        //public List<UserVsTask> UserVsTasks { get; set; }
+
+        public ICollection<UserVsTask> UserVsTasks { get; set; } = new HashSet<UserVsTask>();
 
 
 

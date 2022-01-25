@@ -89,13 +89,15 @@ namespace TaskManagementSystem.ViewModels
 
         public List<SelectListItem> AssignedBy { get; set; }
 
-        public List<ApplicationUser> AssignedTo { get; set; }
+        [Display(Name = "Assigned To")]
+        public List<SelectListItem> AssignedTo { get; set; }
+
+        //public List<ApplicationUser> AssignedTo { get; set; }
 
 
         //public List<string> AssignedTo { get; set; }
         [Display(Name ="Tasks Categories")]
-        public int TaskCategoriesId  { get; set; }
-
+        public int? TaskCategoriesId  { get; set; }
 
         public List<SelectListItem> TaskCategories { get; set; }
 

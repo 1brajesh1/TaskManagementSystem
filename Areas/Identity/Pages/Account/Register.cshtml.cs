@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -11,8 +12,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using TaskManagementSystem.Data;
 using TaskManagementSystem.Models;
 
 using Task = System.Threading.Tasks.Task;
@@ -23,6 +26,7 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        public ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager; 
         private readonly ILogger<RegisterModel> _logger;
@@ -32,12 +36,15 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -49,6 +56,28 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required(ErrorMessage = "Please Write First Name")]
+            [StringLength(25, ErrorMessage = "First name should be this long", MinimumLength = 2)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+
+            [Required(ErrorMessage = "Please Write Last Name")]
+            [StringLength(25, ErrorMessage = "Last name should be this long", MinimumLength = 2)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required(ErrorMessage = "Please Write User Name")]
+            [StringLength(25, ErrorMessage = "Last name should be this long", MinimumLength = 2)]
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
+
+
+            [Required(ErrorMessage = "Please specify Address")]
+            [StringLength(50, ErrorMessage = " should be this long", MinimumLength = 2)]
+            public string Address { get; set; }
+
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -64,12 +93,28 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name ="User Role")]
+            [ForeignKey("UserRole")]
+            public string UserRoleId { get; set; }
+
+            public List<SelectListItem> UserRole{ get; set; }
         }
 
         public async Task OnGetAsync (string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var userRoles = _context.Roles.ToList();
+            var rolesList = new List<SelectListItem>();
+
+            foreach (var item in userRoles)
+            {
+                SelectListItem roleLists = new SelectListItem { Value = item.Id, Text = item.Name };
+                rolesList.Add(roleLists);
+            }
+            ViewData["rolesList"] = rolesList;
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -78,9 +123,23 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.UserName, FullName = Input.FirstName + " " + Input.LastName, Email = Input.Email, Address = Input.Address, UserRoleId = Input.UserRoleId };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                await _userManager.AddToRoleAsync(user, "Admin");
+
+                if (user.UserRoleId == "1")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else if (user.UserRoleId == "2")
+                {
+                    await _userManager.AddToRoleAsync(user, "Manager");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "Employee");
+                }
+                
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

@@ -33,6 +33,8 @@ namespace TaskManagementSystem.Controllers
             return View();
         }
 
+        [Authorize]
+        //[Authorize(Roles = "Admin")]
         public IActionResult CreateTask()
         {
             // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) // will give the user's userId
@@ -60,6 +62,7 @@ namespace TaskManagementSystem.Controllers
             TaskViewModel tvm = new TaskViewModel()
             {
                 AssignedBy = users,
+                AssignedTo = users,
                 TaskCategories = catergories
             };
 
@@ -80,6 +83,7 @@ namespace TaskManagementSystem.Controllers
         //}
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateTask(TaskViewModel taskViewModel)
         {
             if (ModelState.IsValid)
@@ -91,13 +95,22 @@ namespace TaskManagementSystem.Controllers
                     TaskCategoryId = taskViewModel.TaskCategoriesId,
                     AssignedDate = taskViewModel.AssignedDate,
                     AssignedById = taskViewModel.AssignedById,
-                    AssignedTo = taskViewModel.AssignedTo,
+                    //AssignedTo = taskViewModel.AssignedTo,
                     TaskStatus = taskViewModel.TaskStatus,
                     CreatedDate = taskViewModel.CreatedDate,
                     DueDate = taskViewModel.DueDate,
                     TaskCompletedDate = taskViewModel.TaskCompletedDate
 
                 };
+                //var selectedUsers = taskViewModel.AssignedTo.Where(x => x.Selected).Select(y => y.Value).ToList();
+                //foreach (var item in selectedUsers)
+                //{
+                //    task.UserVsTasks.Add(new UserVsTask()
+                //    {
+
+                //        ApplicationUserId = item
+                //    });
+                //}
                 _context.Add(task);
                 _context.SaveChanges();
                 return RedirectToAction("ViewTask");
