@@ -1,44 +1,71 @@
 ﻿@model IEnumerable<TaskManagementSystem.Models.TaskCategory>
 
-@{
-    ViewData["Title"] = "All TaskCategories Info";
-}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css link -->
+    <!-- <link rel="stylesheet" href="./user.css"> -->
 
 
-<h1>All TaskCategories Info</h1>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/taskmangement.css">
+    <!-- font-awesome link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+    <title>ViewTask</title>
+</head>
+<body>
+    <div class="taskcategory-list-section">
+    <!-- userlist-list-header-section start here -->
+    <div class="taskcategory-list-header-section">
+        <div class="sn">S.N.</div>
+        <div class="name">Name</div>
+        <div class="userlist-username">Manager</div>
+        <div class="userlist-email">Action</div>
+    </div>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manager)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+    @{int i = 1; }
+    @foreach (var item in Model)
+    {
+        if (item.Id != 1)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Manager)
-                </td>
+            <div class="taskcategory-rowlist-section">
+                <div class="userlist-sn-value">@(i++)</div>
+                <div class="taskcategory-name-value">@item.Name</div>
+                <div class="taskcategory-Manager-value">@item.Manager.UserName</div>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+                <div class="userlist-edit-delete-value" style="padding: 0 0;">
+                    <a class="edit-btn" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-user-lock"></i></a>
+                    <a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-file-word"></i></a>
+                    <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    }
+
+    <!-- userlist-sixthrowlist-section end here -->
+    <div class="userlist-page-change-section">
+        <!-- userlist-previous-page-section start here -->
+        <div class="userlist-previous-page-section">
+            <button class="userlist-previous-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <!-- <p>Previous Page</p> -->
+        </div>
+        <!-- userlist-previous-page-section end here -->
+        <!-- userlist-current-page-section start here -->
+        <div class="userlist-current-page-section">
+            1
+        </div>
+        <!-- userlist-current-page-section end here -->
+        <!-- userlist-next-page-section start here -->
+        <div class="userlist-next-page-section">
+            <!-- <p>Next Page</p> -->
+            <button class="userlist-next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- userlist-next-page-section end here -->
+    </div>
+    <!-- userlist-page-change-section end here -->
+
+    <script src="/Js/layout.js"></script>
+</body>

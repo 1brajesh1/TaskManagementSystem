@@ -34,7 +34,7 @@ namespace TaskManagementSystem.Controllers
         }
 
         [Authorize]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult CreateTask()
         {
             // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) // will give the user's userId
@@ -105,7 +105,7 @@ namespace TaskManagementSystem.Controllers
                 //var selectedUsers = taskViewModel.AssignedTo.Where(x => x.Selected).Select(y => y.Value).ToList();
                 //foreach (var item in selectedUsers)
                 //{
-                //    task.UserVsTasks.Add(new UserVsTask()
+                //    task.UserTasks.Add(new UsersTask()
                 //    {
 
                 //        ApplicationUserId = item
@@ -128,7 +128,7 @@ namespace TaskManagementSystem.Controllers
 
                 item.AssignedBy = assignedby;
 
-                var taskcategory = _context.TaskCategories.Find(item.TaskCategoryId);
+                var taskcategory = _context.TaskCategories.Find(item.TaskCategory);
                 item.TaskCategory = taskcategory;
             }
 
@@ -187,23 +187,20 @@ namespace TaskManagementSystem.Controllers
             return RedirectToAction("ViewTask");
 
         }
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
+            
+                var taskdetails = _context.Tasks.Find(id);
 
-            else
-            {
-                var taskdetails = await _context.Tasks.FirstOrDefaultAsync(Tasks => Tasks.Id == id);
+                //var taskdetails = await _context.Tasks.FirstOrDefaultAsync(Tasks => Tasks.Id == id);
                 var TaskLists = _context.Tasks.ToList();
                 foreach (var item in TaskLists)
                 {
                     var assignedby = _context.Users.Find(item.AssignedById);
                     item.AssignedBy = assignedby;
 
-                    var taskcategory = _context.TaskCategories.Find(item.TaskCategory.Id);
+                    var taskcategory = _context.TaskCategories.Find(item.TaskCategoryId);
                     item.TaskCategory = taskcategory;
                 }
                 return View(taskdetails);
@@ -211,8 +208,6 @@ namespace TaskManagementSystem.Controllers
             }
             // return View(tasks);
             
-
-        }
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

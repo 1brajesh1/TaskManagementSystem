@@ -1,14 +1,14 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-//namespace TaskManagementSystem.Struct
-//{
-//    public struct Role
-//    {
-//        public const string Admin = "Admin";
-//        public const string Manager = "Manager";
-//        public const string User = "User";
-//    }
-//}
+namespace TaskManagementSystem.Struct
+{
+    public struct Role
+    {
+        public const string Admin = "Admin";
+        public const string Manager = "Manager";
+        public const string User = "User";
+    }
+}

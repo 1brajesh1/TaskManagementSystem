@@ -16,7 +16,8 @@ namespace TaskManagementSystem.Models
         public string UserRoleId { get; set; }
         public IdentityRole UserRole { get; set; }
 
-        public ICollection<UserVsTask> UserVsTasks { get; set; } = new HashSet<UserVsTask>();
+        public ICollection<UsersTask> UserTasks { get; set; } = new HashSet<UsersTask>();
+
         //public bool Selected { get; internal set; }
     }
 
@@ -31,7 +32,7 @@ namespace TaskManagementSystem.Models
 //        public virtual ICollection<IdentityUserToken<string>> Tokens { get; set; }
 
 //        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
-//        public ICollection<UserVsTask> UserVsTasks { get; set; }
+//        public ICollection<UsersTask> UserVsTasks { get; set; }
 
 //    }
 
@@ -49,4 +50,4 @@ namespace TaskManagementSystem.Models
 //}
 
 //public ViewTask ViewTask { get; set; }
-//public List<UserVsTask> UserVsTasks { get; set; }
+//public List<UsersTask> UserVsTasks { get; set; }

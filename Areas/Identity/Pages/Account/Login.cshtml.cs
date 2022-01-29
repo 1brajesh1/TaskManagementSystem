@@ -84,7 +84,7 @@ using Task = System.Threading.Tasks.Task;
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 //var password = await _userManager.CheckPasswordAsync(user, Input.Password);
 
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

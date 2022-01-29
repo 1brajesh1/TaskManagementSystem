@@ -33,7 +33,8 @@ namespace TaskManagementSystem.Controllers
             return View();
         }
 
-       
+        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
 
         // GET: TaskCategoryController/Create
         [HttpGet]

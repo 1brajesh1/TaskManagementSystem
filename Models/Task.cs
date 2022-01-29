@@ -64,9 +64,9 @@ namespace TaskManagementSystem.Models
         //[Required]
         public List<ApplicationUser> AssignedTo { get; set; }
 
-        //public List<UserVsTask> UserVsTasks { get; set; }
+        //public List<UsersTask> UserVsTasks { get; set; }
 
-        public ICollection<UserVsTask> UserVsTasks { get; set; } = new HashSet<UserVsTask>();
+        public ICollection<UsersTask> UserTasks { get; set; } = new HashSet<UsersTask>();
 
 
 

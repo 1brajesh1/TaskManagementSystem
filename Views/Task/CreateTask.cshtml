@@ -5,11 +5,166 @@
 @*@model TaskManagementSystem.Models.Task*@
 @model TaskManagementSystem.ViewModels.TaskViewModel
 
-@{
-    ViewData["Title"] = "CreateTask";
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css link -->
+    <!-- <link rel="stylesheet" href="./user.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/taskmangement.css">
+    <!-- font-awesome link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+    <title>CreateTask</title>
+
+</head>
+@*<h1>CreateTask</h1>*@
+<body>
+
+    <div class="createtask-container-section">
+        <form asp-action="CreateTask" class="createtask-from-section">
+            <div asp-validation-summary="ModelOnly" class="errormessage"></div>
+            <div class="createtask-firstrow-section">
+
+                @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                <div class="taskfrom">
+                    <label asp-for="TaskName"></label>
+                    <input asp-for="TaskName" type="text" class="task-form-input" />
+                    <span asp-validation-for="TaskName" class="errormessage"></span>
+                </div>
+                <div class="taskfrom">
+                    <label asp-for="TaskDetails" class="control-label"></label>
+                    <input asp-for="TaskDetails" class="task-form-input" />
+                    <span asp-validation-for="TaskDetails" class="errormessage"></span>
+                </div>
+                <div class="taskfrom">
+                    <label asp-for="CreatedDate"></label>
+                    <input asp-for="CreatedDate" class="task-form-input" />
+                    @* <input asp-for="CreatedDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />*@
+                    <span asp-validation-for="CreatedDate" class="errormessage"></span>
+                </div>
+
+
+
+
+
+                <div class="taskfrom">
+                    <label asp-for="AssignedDate" class="control-label"></label>
+                    <input asp-for="AssignedDate" class="task-form-input" />
+                    <span asp-validation-for="AssignedDate" class="errormessage"></span>
+                </div>
+
+            </div>
+
+            <div class="createtask-secondrow-section">
+
+                <div class="taskfrom">
+                    <label asp-for="DueDate" class="control-label"></label>
+                    <input asp-for="DueDate" class="task-form-input" />
+                    <span asp-validation-for="DueDate" class="errormessage"></span>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="AssignedBy" class="control-label"></label>
+                        <select name="AssignedBy" class="form-control" asp-items="@ViewBag.users"></select>
+                        <span asp-validation-for="AssignedBy" class="text-danger"></span>
+                    </div>*@
+                <div class="taskfrom">
+                    <label asp-for="AssignedById" class="control-label"></label>
+                    @*<select name="AssignedById" class="form-control" asp-items="@(new SelectList(ViewBag.users, "Value","Text"))">*@
+                    <select asp-for="AssignedById" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))">
+
+                        <option selected disabled>Please Select</option>
+                    </select>
+                    <span asp-validation-for="AssignedById" class="errormessage"></span>
+                </div>
+
+
+
+
+
+                <div class="taskfrom">
+                    <label asp-for="AssignedTo"></label>
+                    @* <select name="AssignedTo" class="form-control" asp-items="@ViewBag.users" multiple>*@
+                    <select asp-for="AssignedTo" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))" multiple>
+                        <option selected disabled>Please Select Multiple User by Holding CTRL</option>
+                    </select>
+                    <span asp-validation-for="AssignedTo" class="errormessage"></span>
+                </div>
+                <div class="taskfrom">
+                    <label asp-for="TaskCategoriesId"></label>
+                    <select asp-for="TaskCategoriesId" class="form-control" asp-items="@(new SelectList(Model.TaskCategories, "Value", "Text"))">
+                        <option selected disabled>Please Select the category</option>
+                    </select>
+
+                    <span asp-validation-for="TaskCategoriesId" class="errormessage"></span>
+                </div>
+            </div>
+
+            <div class="createtask-thirdrow-section">
+
+                <div class="taskfrom">
+                    <label asp-for="TaskStatus"></label>
+                    <select asp-for="TaskStatus" class="form-control" asp-items="Html.GetEnumSelectList<TaskStatusEnum>()">
+                        <option selected disabled>Please Select the Status of the Task</option>
+
+                    </select>
+                    <span asp-validation-for="TaskStatus" class="errormessage"></span>
+                </div>
+
+                <div class="taskfrom">
+                    <label asp-for="TaskCompletedDate"></label>
+                    <input asp-for="TaskCompletedDate" class="task-form-input" />
+                    <span asp-validation-for="TaskCompletedDate" class="errormessage"></span>
+                </div>
+
+                <div class="container-btn">
+                    <input type="submit" value="Create" class="btn createbtn" />
+                </div>
+                <div class="container-btn">
+                    <input type="submit" value="Create" class="createbtn btn" />
+                </div>
+
+
+            </div>
+        </form>
+        <!-- </div> -->
+        <!-- add-user section end here -->
+        <!-- </div> -->
+    </div>
+
+    <a asp-action="ViewTask">Back to List or ViewTask</a>
+
+    <script src="/js/createtask.js"></script>
+    <script src="/js/layout.js"></script>
+</body>
+
+
+
+
+
+
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
 }
 
-<h1>CreateTask</h1>
+
+
+
+
+
+
+
+<!--<h1>CreateTask</h1>
 
 <h4>Task</h4>
 <hr />
@@ -29,9 +184,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
+                <input asp-for="CreatedDate" class="form-control" />-->
                 @* <input asp-for="CreatedDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />*@
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                <!--<span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AssignedDate" class="control-label"></label>
@@ -42,16 +197,16 @@
                 <label asp-for="DueDate" class="control-label"></label>
                 <input asp-for="DueDate" class="form-control" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
-            </div>
+            </div>-->
             @*<div class="form-group">
                     <label asp-for="AssignedBy" class="control-label"></label>
                     <select name="AssignedBy" class="form-control" asp-items="@ViewBag.users"></select>
                     <span asp-validation-for="AssignedBy" class="text-danger"></span>
                 </div>*@
-            <div class="form-group">
-                <label asp-for="AssignedById" class="control-label"></label>
+            <!--<div class="form-group">
+                <label asp-for="AssignedById" class="control-label"></label>-->
                 @*<select name="AssignedById" class="form-control" asp-items="@(new SelectList(ViewBag.users, "Value","Text"))">*@
-                <select asp-for="AssignedById" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))">
+                <!--<select asp-for="AssignedById" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))">
 
                     <option selected disabled>Please Select</option>
                 </select>
@@ -59,9 +214,9 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="AssignedTo" class="control-label"></label>
+                <label asp-for="AssignedTo" class="control-label"></label>-->
                 @* <select name="AssignedTo" class="form-control" asp-items="@ViewBag.users" multiple>*@
-                <select asp-for="AssignedTo" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))" multiple>
+                <!--<select asp-for="AssignedTo" class="form-control" asp-items="@(new SelectList(Model.AssignedBy, "Value","Text"))" multiple>
                     <option selected disabled>Please Select Multiple User by Holding CTRL</option>
                 </select>
                 <span asp-validation-for="AssignedTo" class="text-danger"></span>
@@ -101,8 +256,8 @@
     <a asp-action="ViewTask">Back to List or ViewTask</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-   
-    
-}
+@@section Scripts {
+    @@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}-->

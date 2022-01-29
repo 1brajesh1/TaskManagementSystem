@@ -299,7 +299,7 @@ namespace TaskManagementSystem.Migrations
                     b.ToTable("TaskCategories");
                 });
 
-            modelBuilder.Entity("TaskManagementSystem.Models.UserVsTask", b =>
+            modelBuilder.Entity("TaskManagementSystem.Models.UsersTask", b =>
                 {
                     b.Property<int>("TaskId")
                         .HasColumnType("int");
@@ -307,14 +307,11 @@ namespace TaskManagementSystem.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.HasKey("TaskId", "ApplicationUserId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("UserVsTasks");
+                    b.ToTable("UsersTasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -401,16 +398,16 @@ namespace TaskManagementSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TaskManagementSystem.Models.UserVsTask", b =>
+            modelBuilder.Entity("TaskManagementSystem.Models.UsersTask", b =>
                 {
                     b.HasOne("TaskManagementSystem.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserVsTasks")
+                        .WithMany("UserTasks")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TaskManagementSystem.Models.Task", "Task")
-                        .WithMany("UserVsTasks")
+                        .WithMany("UserTasks")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

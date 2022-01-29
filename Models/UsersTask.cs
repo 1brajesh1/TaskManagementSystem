@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace TaskManagementSystem.Models
 {
-    public class UserVsTask
+    public class UsersTask
     {
-        //public ViewTask ViewTask { get; set; }
-        //public ViewTaskCategory ViewTaskCategory { get; set; }
 
-        public int Id { get; set; }
-       
         [Key]
         [Column(Order = 1)]
         public int TaskId { get; set; }
@@ -22,7 +18,10 @@ namespace TaskManagementSystem.Models
         [Column(Order = 2)]
         public string ApplicationUserId { get; set; }
 
+
+
         public Task Task { get; set; }
+
 
         public ApplicationUser ApplicationUser { get; set; }
     }

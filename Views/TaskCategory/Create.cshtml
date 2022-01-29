@@ -1,42 +1,69 @@
 ﻿@model TaskManagementSystem.Models.TaskCategory
 
-@{
-    ViewData["Title"] = "Create";
-}
 
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<h4>TaskCategory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css link -->
+    <!-- <link rel="stylesheet" href="./user.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/taskmangement.css">
+    <!-- font-awesome link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+    <title>TaskCategory</title>
+
+</head>
+<body>
+    <div class="createtaskcategory-container-section">
+        <form asp-action="Create" class="createtaskcategory-from-section">
+            <div asp-validation-summary="ModelOnly" class="errormessage"></div>
+            <div class="createtask-firstrow-section">
+
+
+                <div class="taskfrom">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="task-form-input" />
+                    <span asp-validation-for="Name" class="errormessage"></span>
+                </div>
+                <div class="taskfrom">
+                    <label asp-for="ManagerId" class="control-label"></label>
+                    @*<input asp-for="Manager" class="form-control" />*@
+                    <select name="ManagerId" class="task-form-input" asp-items="@ViewBag.users"></select>
+                    <span asp-validation-for="ManagerId" class="errormessage"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ManagerId" class="control-label"></label>
-                @*<input asp-for="Manager" class="form-control" />*@
-                <select name="ManagerId" class="form-control" asp-items="@ViewBag.users"></select>
-                <span asp-validation-for="ManagerId" class="text-danger"></span>
+
+            <div class="container-btn">
+                <input type="submit" value="Create" class="btn createbtn" />
+            </div>
+
+            <div class="container-btn">
+                <button type="submit" value="Create" class="createbtn btn"></button>
             </div>
 
 
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="TaskCategory">Back to List or ViewTaskCategory</a>
-</div>
+    <a class="task-form-input" asp-action="ViewTaskCategory">Back to List or ViewTaskCategory</a>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <script src="/Js/layout.js"></script>
+    <script src="/Js/createtask.js"></script>
+
+</body>
+</html>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+
+
+    
