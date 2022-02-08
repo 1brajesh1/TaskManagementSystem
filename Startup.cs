@@ -48,7 +48,7 @@ namespace TaskManagementSystem
             //Set Session Timeout. Default is 20 minutes.
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
 
 

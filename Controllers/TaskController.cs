@@ -15,7 +15,7 @@ using TaskManagementSystem.ViewModels;
 
 namespace TaskManagementSystem.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TaskController : Controller
     {
        
