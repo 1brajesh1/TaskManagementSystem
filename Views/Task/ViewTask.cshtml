@@ -1,5 +1,22 @@
-﻿@model IEnumerable<TaskManagementSystem.Models.Task>
+﻿@*@model IEnumerable<TaskManagementSystem.Models.Task>*@
 
+
+
+
+
+@model IEnumerable<TaskManagementSystem.ViewModels.ListViewModel>
+
+
+@{ if (User.IsInRole("Admin"))
+                {
+                    Layout = "/Views/Shared/AdminDashboard.cshtml";
+                }
+                else
+                {
+                    Layout = "/Views/Shared/_Layout.cshtml";
+                }
+
+}
 
 <head>
     <meta charset="UTF-8">
@@ -7,15 +24,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css link -->
     <!-- <link rel="stylesheet" href="./user.css"> -->
-
-
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/taskmangement.css">
+    @*<link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/taskmangement.css">*@
+    <link rel="stylesheet" href="/css/Adminlayout.css">
+    <link rel="stylesheet" href="/css/Admintaskmgmt.css">
     <!-- font-awesome link -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
     <title>ViewTask</title>
 </head>
 <body>
+    <p>
+        @Html.ActionLink("View All", "ViewTask")
+
+        @using (Html.BeginForm("Search", "Task", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" id="txtName" name="searchparam" placeholder="type here to search" />
+                    </td>
+                    <td>
+                        <input type="submit" id="btnSubmit" value="Search" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </p>
 
     <div class="userlist-list-section">
         <div class="userlist-list-header-section">
@@ -36,14 +71,14 @@
             <div class="userlist-taskcategory">TaskCategory</div>
             <div class="userlist-taskstatus">TaskStatus</div>
 
-            <div class="userlist-taskcompletedate">TaskCompletedDate</div>
+            <div class="userlist-taskcompletedate">CompletedDate</div>
             <div class="userlist-edit-delete">Action</div>
         </div>
 
         @{int i = 1; }
         @foreach (var item in Model)
         {
-            if (item.Id != 1)
+            if (item.Id != 0)
             {
                 <div class="userlist-rowlist-section">
                     <div class="userlist-sn-value">@(i++)</div>
@@ -54,54 +89,77 @@
                     <div class="userlist-duedate-value">@item.AssignedDate</div>
 
                     <div class="userlist-duedate-value">@item.DueDate</div>
-                    <div class="userlist-assignedby-value">@item.AssignedBy.UserName</div>
+                    <div class="userlist-assignedby-value">@item.Assignedby.UserName</div>
 
-                    <div class="userlist-assignedby-value">@item.AssignedTo</div>
+                     <ul class="userlist-assignedby-value">
+                        @foreach (var items in item.AssignedTo)
+                        {
 
-                    <div class="userlist-taskcategory-value">@item.TaskCategory</div>
+                            <li>@items</li>
+
+                        }
+                    </ul>
+
+
+
+                    @*<div class="userlist-assignedby-value">@item.AssignedTo</div>*@
+
+                    <div class="userlist-taskcategory-value">@item.TaskCategory.Name</div>
 
                     <div class="userlist-taskstatus-value">@item.TaskStatus</div>
 
                     <div class="userlist-taskcompletedate-value">@item.TaskCompletedDate</div>
 
                     <div class="userlist-edit-delete-value" style="padding: 0 0;">
-                        @*<button class="edit-btn" id=@item.Id> <i class="fas fa-user-lock"></i></button>
-                        <button class="delete-btn" asp-action="Delete" asp-route-id=@item.Id><i class="fas fa-trash"></i></button>
-                        <button class="detail-btn" asp-action="Details" asp-route-id=@item.Id><i class="fas fa-file-word"></i></button>*@
-                        <a  class="edit-btn" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-user-lock"></i></a> 
-                        <a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-file-word"></i></a> 
+
+                        <a class="edit-btn" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
+
+                        <a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+
+                        @* <a class="detail-btn" data-toggle="ajax-modal" data-target="#myModal-detail" data-url="@Url.Action($"Details/{item.Id}")"><i class="fas fa-info-circle"></i></a>*@
+
                         <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+
 
 
                     </div>
                 </div>
             }
         }
+    </div>
+    <!-- userlist-sixthrowlist-section end here -->
+    <div class="userlist-page-change-section">
+        <!-- userlist-previous-page-section start here -->
+        <div class="userlist-previous-page-section">
+            <button class="userlist-previous-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <!-- <p>Previous Page</p> -->
         </div>
-        <!-- userlist-sixthrowlist-section end here -->
-        <div class="userlist-page-change-section">
-            <!-- userlist-previous-page-section start here -->
-            <div class="userlist-previous-page-section">
-                <button class="userlist-previous-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <!-- <p>Previous Page</p> -->
-            </div>
-            <!-- userlist-previous-page-section end here -->
-            <!-- userlist-current-page-section start here -->
-            <div class="userlist-current-page-section">
-                1
-            </div>
-            <!-- userlist-current-page-section end here -->
-            <!-- userlist-next-page-section start here -->
-            <div class="userlist-next-page-section">
-                <!-- <p>Next Page</p> -->
-                <button class="userlist-next-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <!-- userlist-next-page-section end here -->
+        <!-- userlist-previous-page-section end here -->
+        <!-- userlist-current-page-section start here -->
+        <div class="userlist-current-page-section">
+            1
         </div>
-        <!-- userlist-page-change-section end here -->
+        <!-- userlist-current-page-section end here -->
+        <!-- userlist-next-page-section start here -->
+        <div class="userlist-next-page-section">
+            <!-- <p>Next Page</p> -->
+            <button class="userlist-next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <!-- userlist-next-page-section end here -->
+    </div>
+    <!-- userlist-page-change-section end here -->
+    <!-- The Modal for delete -->
 
-    <script src="/Js/layout.js"></script>
+
+
+
+
+
+
+    <script src="/js/adminlayout.js"></script>
+    @*<script src="/js/site.js"></script>*@
+
+    @*<script src="/Js/layout.js"></script>*@
 </body>
-

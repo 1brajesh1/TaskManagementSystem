@@ -1,0 +1,108 @@
+﻿@model TaskManagementSystem.Models.Task
+
+
+<div>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">FriendsInfo</h4>
+    </div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaskName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskDetails)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaskDetails)
+        </dd>
+        <dt">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AssignedDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AssignedDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DueDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AssignedById)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AssignedBy.UserName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TaskStatus)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TaskCompletedDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TaskCompletedDate)
+            </dd>
+    </dl>
+
+
+    @section scripts
+{
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script>
+            var TeamDetailPostBackURL = '/Home/Details';
+            $(function () {
+                $(".anchorDetail").click(function () {
+                    debugger;
+                    var $buttonClicked = $(this);
+                    var id = $buttonClicked.attr('data-id');
+                    var options = { "backdrop": "static", keyboard: true };
+                    $.ajax({
+                        type: "GET",
+                        url: TeamDetailPostBackURL,
+                        contentType: "application/json; charset=utf-8",
+                        data: { "Id": id },
+                        datatype: "json",
+                        success: function (data) {
+                            debugger;
+                            $('#myModalContent').html(data);
+                            $('#myModal').modal(options);
+                            $('#myModal').modal('show');
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+                //$("#closebtn").on('click',function(){
+                //    $('#myModal').modal('hide');
+
+                $("#closbtn").click(function () {
+                    $('#myModal').modal('hide');
+                });
+            });
+
+        </script>
+
+    }
+
+   

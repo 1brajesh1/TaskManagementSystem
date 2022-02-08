@@ -1,7 +1,35 @@
 ﻿@{
-    Layout = "_Layout";
+
+    @using Microsoft.AspNetCore.Identity
+    @*@using TaskManagementSystem.Areas.Identity.Data*@
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
+
+
+
+    string role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+
+
+
+
+    if (User.IsInRole("Admin"))
+    {
+        //Layout = "AdminDashboard";
+        Layout = "/Views/Shared/AdminDashboard.cshtml";
+    }
+
+
+    else
+    {
+        Layout = "_Layout";
+
+    }
+
+
 }
 
 @*@{
-    Layout = "/Views/Shared/MasterLayout.cshtml";
-}*@
+        Layout = "/Views/Shared/MasterLayout.cshtml";
+    }*@

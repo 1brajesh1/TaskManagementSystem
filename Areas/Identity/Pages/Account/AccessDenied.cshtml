@@ -4,7 +4,25 @@
     ViewData["Title"] = "Access denied";
 }
 
-<header>
+@*<header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
     <p class="text-danger">You do not have access to this resource.</p>
-</header>
+    <link rel="stylesheet" href="/css/accessdenied.css">
+</header>*@
+
+@*<div class="cage"></div>
+<h1><span>403</span></h1>*@
+<html>
+<head>
+    <link rel="stylesheet" href="/css/accessdenied.css">
+</head>
+<body>
+    
+
+    <div class="lock"></div>
+    <div class="message">
+        <h1>Access to this page is restricted</h1>
+        <p>Please check with the site admin if you believe this is a mistake.</p>
+    </div>
+</body>
+</html>

@@ -25,6 +25,7 @@ namespace TaskManagementSystem.Models
         public string TaskDetails { get; set; }
 
         [Required]
+        //[DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; } //today date always 
 
         [Required]
@@ -66,8 +67,9 @@ namespace TaskManagementSystem.Models
 
         //public List<UsersTask> UserVsTasks { get; set; }
 
-        public ICollection<UsersTask> UserTasks { get; set; } = new HashSet<UsersTask>();
+        //public ICollection<UsersTask> UserTasks { get; set; } = new HashSet<UsersTask>();
 
+        public ICollection<UsersTask> UserTasks { get; set; }
 
 
 

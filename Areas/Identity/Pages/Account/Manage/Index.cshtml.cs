@@ -89,9 +89,16 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+
+
+            //var avatar = _userManager.
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
+
+
+
         }
     }
 }

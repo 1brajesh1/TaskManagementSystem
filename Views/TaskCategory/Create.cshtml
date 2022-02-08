@@ -13,8 +13,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/taskmangement.css">
+    @*<link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/taskmangement.css">*@
+
+    <link rel="stylesheet" href="/css/Adminlayout.css">
+    <link rel="stylesheet" href="/css/Admintaskmgmt.css">
+
+
+
     <!-- font-awesome link -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
     <title>TaskCategory</title>
@@ -33,7 +39,7 @@
                     <span asp-validation-for="Name" class="errormessage"></span>
                 </div>
                 <div class="taskfrom">
-                    <label asp-for="ManagerId" class="control-label"></label>
+                    <label asp-for="Manager" class="control-label"></label>
                     @*<input asp-for="Manager" class="form-control" />*@
                     <select name="ManagerId" class="task-form-input" asp-items="@ViewBag.users"></select>
                     <span asp-validation-for="ManagerId" class="errormessage"></span>
@@ -53,10 +59,15 @@
         </form>
     </div>
 
-    <a class="task-form-input" asp-action="ViewTaskCategory">Back to List or ViewTaskCategory</a>
+    @*<a class="task-form-input" asp-action="ViewTaskCategory">Back to List or ViewTaskCategory</a>*@
 
-    <script src="/Js/layout.js"></script>
-    <script src="/Js/createtask.js"></script>
+    @*<script src="/Js/layout.js"></script>
+        <script src="/Js/createtask.js"></script>*@
+
+    
+
+    <script src="/js/adminlayout.js"></script>
+    <script src="/js/create.js"></script>
 
 </body>
 </html>

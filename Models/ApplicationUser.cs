@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,18 @@ namespace TaskManagementSystem.Models
         public override string UserName { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
+
+        //public string Avatar { get; set; }
+
+        //[Required(ErrorMessage = "Please choose profile image")]
+        //public string ImagePath { get; set; }
+
+        //[Required(ErrorMessage = "Please choose profile image")]
+        //public string ProfilePicture { get; set; }
+
+        public string ProfileImage { get; set; }
+
+
 
         public string UserRoleId { get; set; }
         public IdentityRole UserRole { get; set; }

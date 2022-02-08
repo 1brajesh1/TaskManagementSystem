@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +9,7 @@ using TaskManagementSystem.Models;
 
 namespace TaskManagementSystem.ViewModels
 {
-    public class TaskViewModel
+    public class ListViewModel
     {
         public int Id { get; set; }
 
@@ -83,26 +82,28 @@ namespace TaskManagementSystem.ViewModels
         //[Display(Name = "Assigned By")]
         //public IdentityUser AssignedBy { get; set; } //manager
 
-        [Required(ErrorMessage = "Please specify who assigned the task")]
+        
         [Display(Name = "Assigned By")]
         public string AssignedById { get; set; }
 
-        public List<SelectListItem> AssignedBy { get; set; }
+        public ApplicationUser Assignedby { get; set; }
 
-        
-        public List<SelectListItem> AssignedTo { get; set; }
 
-        [Display(Name = "Assigned To")]
-        public string[] AssignedToIds { get; set; }
 
         //public List<ApplicationUser> AssignedTo { get; set; }
 
 
         //public List<string> AssignedTo { get; set; }
-        [Display(Name ="Tasks Categories")]
-        public int? TaskCategoriesId  { get; set; }
+        [Display(Name = "Tasks Categories")]
+        public int? TaskCategoryId { get; set; }
+        public TaskCategory TaskCategory { get; set; }
 
-        public List<SelectListItem> TaskCategories { get; set; }
+        //public List<SelectListItem> AssignedTo { get; set; }
+
+        public List<ApplicationUser> AssignedTo { get; set; } = new List<ApplicationUser>();
+        [Display(Name = "Assigned To")]
+        public string[] AssignedToIds { get; set; }
+
 
     }
 }

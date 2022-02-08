@@ -45,6 +45,12 @@ namespace TaskManagementSystem
             services.AddRazorPages();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            //Set Session Timeout. Default is 20 minutes.
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+            });
+
 
 
 
@@ -71,6 +77,8 @@ namespace TaskManagementSystem
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
+
 
             app.UseEndpoints(endpoints =>
             {

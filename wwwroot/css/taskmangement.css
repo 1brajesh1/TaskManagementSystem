@@ -246,7 +246,7 @@ label {
 .home-container-section {
   display: grid;
   place-items: center;
-  height: 89.5%;
+  height: 70.5%;
   font-size: 1.5em;
   color: rgb(194, 192, 192);
 }
@@ -661,9 +661,9 @@ label {
 
   /* create task  */
   .createtask-container-section {
-    height:100%;
+    height: 105%;
     width: 100%;
-     /*background-color: turquoise;*/ 
+    /*background-color: turquoise;*/
     display: flex;
     align-items: center;
     justify-content: center;
