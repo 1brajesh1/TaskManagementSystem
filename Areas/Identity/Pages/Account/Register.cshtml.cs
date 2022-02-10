@@ -29,7 +29,7 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        public ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager; 
         private readonly ILogger<RegisterModel> _logger;
@@ -100,21 +100,29 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Display(Name ="User Role")]
+            [Display(Name = "User Role")]
             [ForeignKey("UserRole")]
             public string UserRoleId { get; set; }
 
-            public List<SelectListItem> UserRole{ get; set; }
+            public List<SelectListItem> UserRole { get; set; }
 
-            [Required(ErrorMessage = "Please choose profile image")]
             [Display(Name = "Profile Picture")]
-            public IFormFile ProfileImage { get; set; }
+            public byte[] ProfilePicture { get; set; }
+
+            //[Required(ErrorMessage = "Please choose profile image")]
+            //[Display(Name = "Profile Picture")]
+            //public IFormFile ProfileImage { get; set; }
+
+            //[Required(ErrorMessage = "Please choose profile image")]
+            //[Display(Name = "Profile Picture")]
+            //public byte[] ProfilePicture { get; set; }
+
 
 
 
         }
 
-        public async Task OnGetAsync (string returnUrl = null)
+        public async Task OnGetAsync(ApplicationUser user,string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -128,48 +136,105 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             }
             ViewData["rolesList"] = rolesList;
 
+            var profilePicture = user.ProfilePicture;
+
         }
 
 
 
-        public async Task<IActionResult> OnPostAsync( string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+
             if (ModelState.IsValid)
             {
-                  
-                    //string uniqueFileName = UploadedFile(model);
-
-                    var user = new ApplicationUser { 
+                var user = new ApplicationUser {
                     UserName = Input.UserName, 
-                    FullName = Input.FirstName + " " + Input.LastName, 
-                    Email = Input.Email, 
-                    Address = Input.Address, 
-                    UserRoleId = Input.UserRoleId
-                
+                    FullName = Input.FirstName + " " + Input.LastName,
+                    Email = Input.Email,
+                    Address = Input.Address,
+                    UserRoleId = Input.UserRoleId,
+                    ProfilePicture =Input.ProfilePicture
                 };
 
+                if (Request.Form.Files.Count > 0)
+                {
+                    IFormFile file = Request.Form.Files.FirstOrDefault();
+                    using (var dataStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(dataStream);
+                        user.ProfilePicture = dataStream.ToArray();
+                    }
+                    await _userManager.UpdateAsync(user);
+                }
 
-                //private string UploadedFile(ApplicationUserViewModel model)
+                //if (ModelState.IsValid)
                 //{
 
-                //    string uniqueFileName = null;
+                //    //string stringFileName = UploadFile(Input);
 
-                //    if (model.ProfileImage != null)
+                //    var user = new ApplicationUser
                 //    {
-                //        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                //        uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;
-                //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                //        UserName = Input.UserName,
+                //        FullName = Input.FirstName + " " + Input.LastName,
+                //        Email = Input.Email,
+                //        Address = Input.Address,
+                //        UserRoleId = Input.UserRoleId,
+                //        //ProfilePicture = Input.ProfilePicture
+                //        //ProfileImage = stringFileName
+
+                //    };
+
+                //if (ModelState.IsValid)
+                //{
+                //    var user = new ApplicationUser 
+                //    { 
+                //        UserName = Input.UserName, 
+                //        FullName = Input.FirstName + " " + Input.LastName,
+                //        Email = Input.Email, 
+                //        Address = Input.Address,
+                //        UserRoleId = Input.UserRoleId 
+                //    };
+
+                //_context.Users.Add(user);
+                //_context.SaveChanges();
+
+                //return RedirectToAction("Login");
+
+
+                //  string UploadFile(InputModel Input)
+                //{
+
+                //    string fileName = null;
+
+                //    if (Input.ProfileImage != null)
+                //    {
+                //        string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                //        fileName = Guid.NewGuid().ToString() + "_" + Input.ProfileImage.FileName;
+                //        string filePath = Path.Combine(uploadDir, fileName);
                 //        using (var fileStream = new FileStream(filePath, FileMode.Create))
                 //        {
-                //            model.ProfileImage.CopyTo(fileStream);
+                //            Input.ProfileImage.CopyTo(fileStream);
                 //        }
                 //    }
-                //    return uniqueFileName;
+                //    return fileName;
 
 
                 //}
+
+                //if (Request.Form.Files.Count > 0)
+                //{
+                //    IFormFile file = Request.Form.Files.FirstOrDefault();
+                //    using (var dataStream = new MemoryStream())
+                //    {
+                //        await file.CopyToAsync(dataStream);
+                //        user.ProfilePicture = dataStream.ToArray();
+                //    }
+                //    await _userManager.UpdateAsync(user);
+                //}
+
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -181,7 +246,7 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(user, "Manager");
                 }
-                else
+                else 
                 {
                     await _userManager.AddToRoleAsync(user, "Employee");
                 }

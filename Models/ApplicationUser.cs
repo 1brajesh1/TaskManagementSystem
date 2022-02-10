@@ -10,6 +10,8 @@ namespace TaskManagementSystem.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+
         public override string UserName { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
@@ -22,7 +24,11 @@ namespace TaskManagementSystem.Models
         //[Required(ErrorMessage = "Please choose profile image")]
         //public string ProfilePicture { get; set; }
 
-        public string ProfileImage { get; set; }
+        //public string ProfileImage { get; set; }
+
+        //public byte[] ProfilePicture { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
 
 
 

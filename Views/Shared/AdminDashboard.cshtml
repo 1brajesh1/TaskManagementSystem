@@ -113,41 +113,71 @@
                 </ul>
 
             <li>
-                
-                <a class="icon " asp-area="Identity" asp-page="/Account/Register">
+                @if (SignInManager.IsSignedIn(User))
+                {
 
-                    <i class="fas fa-user-plus"></i>
-                    <span class="link_name ">Register</span>
+                    @*<a class="icon " asp-area="Identity" asp-page="/Account/Register">*@
+                    <a method="post" class="icon " asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
 
-                </a>
-               
+                        <i class="fas fa-user-plus"></i>
+                        <span class="link_name ">Register</span>
+
+                    </a>
+                }
             </li>
 
 
-           
-            <li>
 
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="/Images/profile.jpg" alt="profile">
-                    </div>
+          
 
-                    <div class="name-job">
-                        <div class="profile_name">
-                            Mananjay
+
+
+
+
+
+
+
+                <li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div class="profile-details">
+                            <div class="profile-content">
+                                @*<img src="~/Images/@UserManager.GetUserAsync(User).Result.ProfilePicture" class="rounded-circle" width="40" height="40" />*@
+                                @*<img @UserManager.GetUserAsync(User).Result.ProfilePicture />*@
+                                @*<img @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture)) />*@
+
+
+                                <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+
+                            </div>
+
+                            <div class="name-job">
+                                <div class="profile_name">
+                                    @*Mananjay*@
+
+                                    <h5> @UserManager.GetUserAsync(User).Result.UserName </h5>
+                                </div>
+                                <div class="job">
+                                    @*@UserManager.GetUserAsync(User).Result.UserRole*@
+                                    @*Frontend Developer*@
+                                    Admin
+                                </div>
+
+                            </div>
+                            @*<a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="main-container-logout-btn"> Sign Out</button>
+                        </a>*@
+                            <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><i class="fas fa-sign-out-alt"></i></a>
+
+
+
                         </div>
-                        <div class="job">
-                            Frontend Developer
-                        </div>
+                    }
+                </li>
 
-                    </div>
-                    <i class="fas fa-sign-out-alt"></i>
-
-
-                </div>
-            </li>
-
-        </ul>
+            </ul>
     
     </div>
 
@@ -162,27 +192,47 @@
 
                 <h5>@UserManager.GetUserAsync(User).Result.UserName</h5>
                 @*<h5>Mananjay Shrestha</h5>*@
-                <img src="/Images/profile.jpg" alt="userimage">
+                @*<img src="/Images/profile.jpg" alt="userimage">*@
+
+                @*<li class="nav-item" style="align-self: center;">
+            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+            }
+        </li>*@
+                <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+
+                @*<img @UserManager.GetUserAsync(User).Result.ProfilePicture>*@
             </div>
         </div>
            <!-- logout section start -->
     <div class="main-container-logout-section">
         <!-- userlist-user-profile-img start here -->
         <div class="main-container-user-profile-img">
-            <img src="/Images/profile.jpg" alt="userimage">
+            @*<img src="/Images/profile.jpg" alt="userimage">*@
+            <img style="width:60px;height:60px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
             <button class="main-container-logout-section-close-btn"><i class="fas fa-times"></i></button>
         </div>
         <!-- userlist-user-profile-img start here -->
         @*<h3>Mananjay Shrestha</h3>*@
         <h3>@UserManager.GetUserAsync(User).Result.UserName</h3>
+
         <h3 class="main-container-user-email">@UserManager.GetUserAsync(User).Result.Email</h3>
+
         <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/">
-           <span> <button class="main-container-manage-account">
-                Manage Your Account
-            </button> </span>
+            <span>
+                <button class="main-container-manage-account">
+                    Manage Your Account
+                </button>
+            </span>
         </a>
-        <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login">
-            <span> <button class="main-container-logout-btn"> Sign Out</button> </span>
+        @*<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+        </form>*@
+
+        <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="main-container-logout-btn"> Sign Out</button>
         </a>
         <!-- userlist-logout-footer-section start here -->
         <div class="main-container-logout-footer-section">

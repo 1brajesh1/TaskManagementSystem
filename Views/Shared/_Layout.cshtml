@@ -59,21 +59,21 @@
 
                 </div>
                 <ul class="sub-menu link">
-                     @if (User.IsInRole("Manager"))
-                     {
+                    @if (User.IsInRole("Manager"))
+                    {
 
 
-                    <li class="subheader">
-                        @*<label>Form</label>*@
-                    </li>
-                    <li>
-                        <a href="#" class="link_name">Task</a>
-                    </li>
+                        <li class="subheader">
+                            @*<label>Form</label>*@
+                        </li>
+                        <li>
+                            <a href="#" class="link_name">Task</a>
+                        </li>
 
-                    <li>
-                        <a asp-area="" asp-controller="Task" asp-action="CreateTask">Create Task</a>
-                    </li>
-                     }
+                        <li>
+                            <a asp-area="" asp-controller="Task" asp-action="CreateTask">Create Task</a>
+                        </li>
+                    }
                     <li class="subheader">
                         @*<label>Table</label>*@
                     </li>
@@ -101,16 +101,16 @@
                     </li>
 
                     @if (User.IsInRole("Manager"))
-            {
+                    {
 
-            
-                    <li class="subheader">
-                        @*<label>Form</label>*@
-                    </li>
-                    <li>
-                        <a asp-area="" asp-controller="TaskCategory" asp-action="Create">Create TaskCategory</a>
 
-                    </li>
+                        <li class="subheader">
+                            @*<label>Form</label>*@
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="TaskCategory" asp-action="Create">Create TaskCategory</a>
+
+                        </li>
                     }
                     <li class="subheader">
                         @*<label>Table</label>*@
@@ -122,10 +122,52 @@
 
                 </ul>
             </li>
-            <li>
 
-                
+
+            <li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <div class="profile-details">
+                    <div class="profile-content">
+                        @*<img src="~/Images/@UserManager.GetUserAsync(User).Result.ProfilePicture" class="rounded-circle" width="40" height="40" />*@
+                        @*<img @UserManager.GetUserAsync(User).Result.ProfilePicture />*@
+                        @*<img @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture)) />*@
+
+
+                        <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+
+                    </div>
+
+                    <div class="name-job">
+                        <div class="profile_name">
+                            @*Mananjay*@
+
+                            <h5> @UserManager.GetUserAsync(User).Result.UserName </h5>
+                        </div>
+                        <div class="job">
+                            @UserManager.GetUserAsync(User).Result.UserRole
+                            @*Frontend Developer*@
+
+                        </div>
+
+                    </div>
+                    
+
+                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><i class="fas fa-sign-out-alt"></i></a>
+
+
+
+
+                </div>
+                }
             </li>
+
+
+
+
+
 
         </ul>
 
@@ -142,14 +184,18 @@
 
                     <h5>@UserManager.GetUserAsync(User).Result.UserName</h5>
                     @*<h5>Mananjay Shrestha</h5>*@
-                    <img src="/Images/profile.jpg" alt="userimage">
+                    @*<img src="/Images/profile.jpg" alt="userimage">*@
+               
+                <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
                 </div>
             </div>
             <!-- logout section start -->
             <div class="main-container-logout-section">
                 <!-- userlist-user-profile-img start here -->
                 <div class="main-container-user-profile-img">
-                    <img src="/Images/profile.jpg" alt="userimage">
+                    @*<img src="/Images/profile.jpg" alt="userimage">*@
+
+                    <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
                     <button class="main-container-logout-section-close-btn"><i class="fas fa-times"></i></button>
                 </div>
                 <!-- userlist-user-profile-img start here -->
@@ -157,11 +203,11 @@
                 <h3>@UserManager.GetUserAsync(User).Result.UserName</h3>
                 <h3 class="main-container-user-email">@UserManager.GetUserAsync(User).Result.Email</h3>
                 <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/">
-                    <span>
+                    
                         <button class="main-container-manage-account">
                             Manage Your Account
                         </button>
-                    </span>
+                   
                 </a>
                 <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login">
                     <span> <button class="main-container-logout-btn"> Sign Out</button> </span>

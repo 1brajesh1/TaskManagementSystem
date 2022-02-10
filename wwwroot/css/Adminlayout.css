@@ -421,8 +421,8 @@
   transition: all 0.2s linear;
 }
 .main-container-image-section {
-  display: flex;
-  align-items: center;
+   display: flex; 
+   align-items: center; 
   color: white;
 }
 
