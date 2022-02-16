@@ -106,8 +106,8 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
 
             public List<SelectListItem> UserRole { get; set; }
 
-            [Display(Name = "Profile Picture")]
-            public byte[] ProfilePicture { get; set; }
+            //[Display(Name = "Profile Picture")]
+            //public byte[]? ProfilePicture { get; set; }
 
             //[Required(ErrorMessage = "Please choose profile image")]
             //[Display(Name = "Profile Picture")]
@@ -136,7 +136,7 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
             }
             ViewData["rolesList"] = rolesList;
 
-            var profilePicture = user.ProfilePicture;
+            //var profilePicture = user.ProfilePicture;
 
         }
 
@@ -156,73 +156,8 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     Address = Input.Address,
                     UserRoleId = Input.UserRoleId,
-                    ProfilePicture =Input.ProfilePicture
+                    //ProfilePicture =Input.ProfilePicture
                 };
-
-                if (Request.Form.Files.Count > 0)
-                {
-                    IFormFile file = Request.Form.Files.FirstOrDefault();
-                    using (var dataStream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(dataStream);
-                        user.ProfilePicture = dataStream.ToArray();
-                    }
-                    await _userManager.UpdateAsync(user);
-                }
-
-                //if (ModelState.IsValid)
-                //{
-
-                //    //string stringFileName = UploadFile(Input);
-
-                //    var user = new ApplicationUser
-                //    {
-                //        UserName = Input.UserName,
-                //        FullName = Input.FirstName + " " + Input.LastName,
-                //        Email = Input.Email,
-                //        Address = Input.Address,
-                //        UserRoleId = Input.UserRoleId,
-                //        //ProfilePicture = Input.ProfilePicture
-                //        //ProfileImage = stringFileName
-
-                //    };
-
-                //if (ModelState.IsValid)
-                //{
-                //    var user = new ApplicationUser 
-                //    { 
-                //        UserName = Input.UserName, 
-                //        FullName = Input.FirstName + " " + Input.LastName,
-                //        Email = Input.Email, 
-                //        Address = Input.Address,
-                //        UserRoleId = Input.UserRoleId 
-                //    };
-
-                //_context.Users.Add(user);
-                //_context.SaveChanges();
-
-                //return RedirectToAction("Login");
-
-
-                //  string UploadFile(InputModel Input)
-                //{
-
-                //    string fileName = null;
-
-                //    if (Input.ProfileImage != null)
-                //    {
-                //        string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
-                //        fileName = Guid.NewGuid().ToString() + "_" + Input.ProfileImage.FileName;
-                //        string filePath = Path.Combine(uploadDir, fileName);
-                //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                //        {
-                //            Input.ProfileImage.CopyTo(fileStream);
-                //        }
-                //    }
-                //    return fileName;
-
-
-                //}
 
                 //if (Request.Form.Files.Count > 0)
                 //{
@@ -234,6 +169,8 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
                 //    }
                 //    await _userManager.UpdateAsync(user);
                 //}
+
+               
 
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

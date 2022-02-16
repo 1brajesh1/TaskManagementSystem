@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css link -->
     <!-- <link rel="stylesheet" href="./user.css"> -->
-
-
     @*<link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/taskmangement.css">*@
+        <link rel="stylesheet" href="/css/taskmangement.css">*@
 
     <link rel="stylesheet" href="/css/Adminlayout.css">
     <link rel="stylesheet" href="/css/Admintaskmgmt.css">
@@ -39,8 +37,15 @@
 
                     <div class="userlist-edit-delete-value" style="padding: 0 0;">
                         <a class="edit-btn" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
-                        <a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
-                        <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                        @*<a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                        <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>*@
+
+                        <a class="detail-btn" data-ajax="true" id="@item.Id"><i class="fas fa-info-circle"></i></a>
+
+                        <a class="delete-btn" @*asp-action="Delete"*@ data-ajax="true" data-id="@item.Id"><i class="fas fa-trash"></i></a>
+
+
+
                     </div>
                 </div>
             }
@@ -69,8 +74,97 @@
         <!-- userlist-next-page-section end here -->
     </div>
     <!-- userlist-page-change-section end here -->
-
     @*<script src="/Js/layout.js"></script>*@
+    <div id="myModal" class="modal">
 
-    <script src="/Js/adminlayout.js"></script>
+        <!-- adduser section start here -->
+        <div class="adduser-form-section">
+            <!-- <div class="userlist-adduser-header">
+
+            </div> -->
+
+            <div class="modal-content">
+                <div class="container">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+
+                    <div class="clearfix">
+                        <button class="clearfix-btn deletebtn delete-catgegory">Delete</button>
+                        <button class="clearfix-btn cancelbtn">Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div id="myModal-detail" class="modal-detail">
+
+        <!-- adduser section start here -->
+        <div class="detail-form-section">
+            <div class="detail-head-section">
+                <h1>Detail</h1>
+            </div>
+            <div class="detail-content-section">
+
+            </div>
+
+            <div class="clearfix btnn">
+                <button id="cancelbtnn" class="clearfix-btnn cancelbtnn">Cancel</button>
+
+            </div>
+
+
+        </div>
+
+        <!-- add-user section end here -->
+    </div>
+    <script src="~/js/adminlayout.js"></script>
+
 </body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(".detail-btn").click(function () {
+        id = this.id;
+        debugger
+        $.ajax({
+            type: "Get",
+            url: "/TaskCategory/Details",
+            data: { id: id },
+            async: false,
+            success: function (result) {
+                debugger
+
+                $(".detail-content-section").empty();
+                $(".detail-content-section").append(result);
+                $("#myModal-detail").show();
+            }
+        });
+    });
+    $("#cancelbtnn").click(function () {
+        $("#myModal-detail").hide();
+    });
+    $(".deletebtn").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/TaskCategory/Delete",
+            data: { id: id },
+            async: false,
+
+            success: function (response) {
+                window.location.reload(true)
+            }
+        });
+    });
+    $(".cancelbtn").click(function () {
+        $('#myModal').hide();
+    });
+
+</script>
+

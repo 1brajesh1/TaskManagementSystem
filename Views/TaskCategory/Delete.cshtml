@@ -38,22 +38,29 @@
                     <h4 class="detail-title">
                         Manager
                     </h4>
-                    <h4>@Model.Manager.UserName</h4> 
+                    <h4>@Model.Manager.UserName</h4>
                 </div>
 
             </div>
 
 
+            @*<form asp-action="Delete">
+            <div class="clearfix">
+                <input type="hidden" asp-for="Id" />
+                <input class="clearfix-btn deletebtn" type="submit" value="Delete" />
+
+
+                <button asp-controller="TaskCategory" asp-action="ViewTaskCategory" class="clearfix-btn cancelbtn">Cancel</button>
+            </div>
+
+        </form>*@
+
             <form asp-action="Delete">
-                <div class="clearfix">
-                    <input type="hidden" asp-for="Id" />
-                    <input class="clearfix-btn deletebtn" type="submit" value="Delete" />
-
-
-                    <button asp-controller="TaskCategory" asp-action="ViewTaskCategory" class="clearfix-btn cancelbtn">Cancel</button>
-                </div>
-                    
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-action="ViewTaskCategory">Back to List</a>
             </form>
+
 
         </div>
     </div>

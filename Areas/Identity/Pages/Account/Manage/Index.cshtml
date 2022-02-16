@@ -3,28 +3,117 @@
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
+    Layout = "/Views/Shared/AdminDashboard.cshtml";
 }
 
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css link -->
+    <!-- <link rel="stylesheet" href="./user.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    @*<link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/taskmangement.css">*@
+
+    <link rel="stylesheet" href="/css/Adminlayout.css">
+    <link rel="stylesheet" href="/css/Admintaskmgmt.css">
+
+
+
+    <!-- font-awesome link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+
+
+    @*<h4>@ViewData["Title"]</h4>*@
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    @*<div class="row">
+        <div class="col-md-6">*@
+    <h1 >Change your account settings</h1>
+
+
+    <div class="createtaskcategory-container-section">
+
+
+        <form class="createtask-from-section" id="profile-form" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="errormessage"></div>
+
+            <div class="createtask-firstrow-section">
+
+                <div class="taskfrom">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="control-label" disabled />
+                </div>
+                <div class="taskfrom">
+                    <label asp-for="Input.PhoneNumber" class="control-label"></label>
+                    <input asp-for="Input.PhoneNumber" class="task-form-input" />
+                    <span asp-validation-for="Input.PhoneNumber" class="errormessage"></span>
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+            <div class="createtask-secondrow-section">
+                @*<div class="taskfrom">*@
+                <div asp-validation-summary="ModelOnly" class="errormessage"></div>
+                <div class="taskfrom">
+                    <label asp-for="Input.ProfilePicture" style="width: 100%;"></label>
+                    @if (Model.Input.ProfilePicture != null)
+                    {
+                        <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePicture))">
+                    }
+                    else
+                    {
+                        <img id="profilePicture" style="width:350px;height:350px; object-fit:cover" src="">
+                    }
+                    <input type="file"
+                           accept=".png,.jpg,.jpeg,.gif,.tif"
+                           asp-for="Input.ProfilePicture"
+                           class="control-label"
+                           style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                    <span asp-validation-for="Input.ProfilePicture" class="errormessage"></span>
+                </div>
+
+                @*<div class="form-control" >
+                        <input type="submit" value="Save" class="btn createbtn" />
+                    </div>*@
+
+
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+
+            <div class="createtask-thirdrow-section">
+                <div class="container-btn">
+                    <input type="submit" value="Save" class="createbtn btn" />
+                </div>
+                <div class="container-btn">
+                    <input type="submit" value="Save" class="btn createbtn" />
+                </div>
+                @*<button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>*@
+
+
+            </div>
+
+
         </form>
     </div>
-</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+
+    <script src="/js/adminlayout.js"></script>
+    <script src="/js/create.js"></script>
+
+</body>
+</html>
+
+
+@*@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }*@

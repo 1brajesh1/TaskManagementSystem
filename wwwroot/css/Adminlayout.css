@@ -293,6 +293,7 @@
 }
 .main-container-logout-section.show {
   display: block;
+  z-index: 1000;
 }
 .main-container-logout-section h3 {
   font-size: 1em;

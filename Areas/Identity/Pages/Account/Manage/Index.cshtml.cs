@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TaskManagementSystem.Data;
 using TaskManagementSystem.Models;
 using Task = System.Threading.Tasks.Task;
 
@@ -13,15 +16,19 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public string Username { get; set; }
@@ -37,6 +44,11 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Profile Picture")]
+            public byte[]? ProfilePicture { get; set; }
+
+
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -46,15 +58,22 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
+            var profilePicture = user.ProfilePicture;
+
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ProfilePicture = profilePicture
             };
+
+            
+
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(ApplicationUser user1)
         {
             var user = await _userManager.GetUserAsync(User);
+            var profilePicture = user1.ProfilePicture;
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -74,9 +93,25 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
+                var user1 = new ApplicationUser {
+                    ProfilePicture = Input.ProfilePicture
+                };
+
                 await LoadAsync(user);
                 return Page();
             }
+
+            if (Request.Form.Files.Count > 0)
+            {
+                IFormFile file = Request.Form.Files.FirstOrDefault();
+                using (var dataStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(dataStream);
+                    user.ProfilePicture = dataStream.ToArray();
+                }
+                await _userManager.UpdateAsync(user);
+            }
+
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

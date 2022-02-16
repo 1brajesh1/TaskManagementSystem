@@ -14,6 +14,10 @@
 
     <!-- font-awesome link -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
+
+
+
+
     <title>@ViewData["Title"] - TaskManagementSystem</title>
 
     @using Microsoft.AspNetCore.Identity
@@ -127,40 +131,52 @@
             <li>
                 @if (SignInManager.IsSignedIn(User))
                 {
-                <div class="profile-details">
-                    <div class="profile-content">
-                        @*<img src="~/Images/@UserManager.GetUserAsync(User).Result.ProfilePicture" class="rounded-circle" width="40" height="40" />*@
-                        @*<img @UserManager.GetUserAsync(User).Result.ProfilePicture />*@
-                        @*<img @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture)) />*@
+                    <div class="profile-details">
+                        <div class="profile-content">
+                            @*<img src="~/Images/@UserManager.GetUserAsync(User).Result.ProfilePicture" class="rounded-circle" width="40" height="40" />*@
+                            @*<img @UserManager.GetUserAsync(User).Result.ProfilePicture />*@
+                            @*<img @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture)) />*@
 
 
-                        <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                            @*<img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">*@
+
+
+
+                            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                            {
+                                <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
                              @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+                            }
+                            else
+                            {
+                                <img id="profilePicture" style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="">
+                            }
 
-
-                    </div>
-
-                    <div class="name-job">
-                        <div class="profile_name">
-                            @*Mananjay*@
-
-                            <h5> @UserManager.GetUserAsync(User).Result.UserName </h5>
-                        </div>
-                        <div class="job">
-                            @UserManager.GetUserAsync(User).Result.UserRole
-                            @*Frontend Developer*@
 
                         </div>
 
+                        <div class="name-job">
+                            <div class="profile_name">
+                                @*Mananjay*@
+
+                                <h5> @UserManager.GetUserAsync(User).Result.UserName </h5>
+                            </div>
+                            <div class="job">
+                                @UserManager.GetUserAsync(User).Result.UserRole
+                                @*Frontend Developer*@
+
+                            </div>
+
+                        </div>
+
+
+                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><i class="fas fa-sign-out-alt"></i></a>
+
+
+
+
                     </div>
-                    
-
-                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"><i class="fas fa-sign-out-alt"></i></a>
-
-
-
-
-                </div>
                 }
             </li>
 
@@ -185,8 +201,19 @@
                     <h5>@UserManager.GetUserAsync(User).Result.UserName</h5>
                     @*<h5>Mananjay Shrestha</h5>*@
                     @*<img src="/Images/profile.jpg" alt="userimage">*@
-               
-                <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+
+                    @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                    {
+                        <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+                    }
+                    else
+                    {
+                        <img id="profilePicture" style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="">
+                    }
+
+
                 </div>
             </div>
             <!-- logout section start -->
@@ -195,29 +222,43 @@
                 <div class="main-container-user-profile-img">
                     @*<img src="/Images/profile.jpg" alt="userimage">*@
 
-                    <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+
+                    @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                    {
+                        <img style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="data:image/*;base64,
+                             @(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+                    }
+                    else
+                    {
+                        <img id="profilePicture" style="width:50px;height:50px; object-fit:cover; border-radius:30px" src="">
+                    }
+
+
+
+
                     <button class="main-container-logout-section-close-btn"><i class="fas fa-times"></i></button>
                 </div>
                 <!-- userlist-user-profile-img start here -->
                 @*<h3>Mananjay Shrestha</h3>*@
                 <h3>@UserManager.GetUserAsync(User).Result.UserName</h3>
                 <h3 class="main-container-user-email">@UserManager.GetUserAsync(User).Result.Email</h3>
-                <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/">
-                    
+                
+                    <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Manage/Index">
+
                         <button class="main-container-manage-account">
                             Manage Your Account
                         </button>
-                   
-                </a>
-                <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login">
-                    <span> <button class="main-container-logout-btn"> Sign Out</button> </span>
-                </a>
-                <!-- userlist-logout-footer-section start here -->
-                <div class="main-container-logout-footer-section">
-                    <h3>Privacy Policy</h3>
-                </div>
-                <!-- userlist-logout-footer-section end here -->
-            </div>
+
+                    </a>
+                    <a style="text-decoration: none;" asp-area="Identity" asp-page="/Account/Login">
+                        <span> <button class="main-container-logout-btn"> Sign Out</button> </span>
+                    </a>
+                    <!-- userlist-logout-footer-section start here -->
+                    <div class="main-container-logout-footer-section">
+                        <h3>Privacy Policy</h3>
+                    </div>
+                    <!-- userlist-logout-footer-section end here -->
+</div>
             <!-- logout section end -->
             <div class="home-container-section">
 
@@ -226,6 +267,13 @@
         }
     </section>
     <script src="/js/adminlayout.js"></script>
+
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
 
     @RenderSection("Scripts", required: false)
 </body>

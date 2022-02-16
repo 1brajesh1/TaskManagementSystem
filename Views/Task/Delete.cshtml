@@ -1,119 +1,27 @@
 ﻿@model TaskManagementSystem.Models.Task
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css link -->
-    <!-- <link rel="stylesheet" href="./user.css"> -->
-    @*<link rel="stylesheet" href="/css/layout.css">
-        <link rel="stylesheet" href="/css/taskmangement.css">*@
-    <link rel="stylesheet" href="/css/Adminlayout.css">
-    <link rel="stylesheet" href="/css/Admintaskmgmt.css">
-    <!-- font-awesome link -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet" />
-    <title>Delete</title>
-</head>
-<body>
-    <div class="createtask-container-section">
-
-        <!-- adduser section start here -->
-        <div class="detail-form-section">
-            <div class="detail-head-section">
-
-                <h1>Delete</h1>
-                <p>Are you sure you want to delete ?</p>
-                <hr />
-            </div>
-            <div class="detail-content-section">
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        TaskName
-                    </h4>
-                    <h4>@Model.TaskName</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        TaskDetails
-                    </h4>
-                    <h4>@Model.TaskDetails</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        CreatedDate
-                    </h4>
-                    <h4>@Model.CreatedDate</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        AssignedDate
-                    </h4>
-                    <h4>@Model.AssignedDate</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        DueDate
-                    </h4>
-                    <h4>@Model.DueDate</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        AssignedBy
-                    </h4>
-                    <h4>@Model.AssignedBy.UserName</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        AssignedTo
-                    </h4>
-                    <h4>@Model.AssignedTo</h4>
-                </div>
-
-               
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        TaskCategory
-                    </h4>
-                    <h4>@Model.TaskCategory.Name</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        TaskStatus
-                    </h4>
-                    <h4>@Model.TaskStatus</h4>
-                </div>
-
-                <div class="detail-section">
-                    <h4 class="detail-title">
-                        TaskCompletedDate
-                    </h4>
-                    <h4>@Model.TaskCompletedDate</h4>
-                </div>
 
 
+<h1>Delete</h1>
 
-                <form asp-action="Delete">
-                    <div class="clearfix">
-                        <input type="hidden" asp-for="Id" />
+<h3>Are you sure you want to delete this?</h3>
+<ul class="list-group">
+    <li class="list-group-item">Task Name: @Model.TaskName</li>
+    <li class="list-group-item">Task Description: @Model.TaskDetails</li>
 
-                        <input class="clearfix-btn deletebtn" type="submit" value="Delete" />
-                        <button asp-controller="Task" asp-action="ViewTask" class="clearfix-btn cancelbtn">Cancel</button>
-                    </div>
-                </form>
-            </div>
+    <li class="list-group-item">CreatedDate: @Model.CreatedDate</li>
+    <li class="list-group-item">AssignedDate: @Model.AssignedDate</li>
+    <li class="list-group-item">DueDate: @Model.DueDate</li>
+    <li class="list-group-item">AssignedBy: @Model.AssignedBy.UserName</li>
+    <li class="list-group-item">AssignedTo : @Model.AssignedTo</li>
+    <li class="list-group-item">TaskCategory: @Model.TaskCategory.Name</li>
+    <li class="list-group-item">TaskStatus: @Model.TaskStatus</li>
+    <li class="list-group-item">TaskCompletedDate: @Model.TaskCompletedDate</li>
+</ul>
 
-        </div>
-        </div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="ViewTask">Back to List</a>
+</form>
 
-        <script src="/js/adminlayout.js"></script>
-        <script src="/js/site.js"></script>
-
-</body>

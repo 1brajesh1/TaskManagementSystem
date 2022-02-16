@@ -23,12 +23,26 @@
 
     else
     {
-        Layout = "_Layout";
+        Layout = "/Views/Shared/_Layout.cshtml";
 
     }
 
 
 }
+
+
+@*@{ if (User.IsInRole("Admin"))
+    {
+        Layout = "/Views/Shared/AdminDashboard.cshtml";
+    }
+    else
+    {
+        Layout = "/Views/Shared/_Layout.cshtml";
+    }
+
+}*@
+
+
 
 @*@{
         Layout = "/Views/Shared/MasterLayout.cshtml";

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TaskManagementSystem.Data;
 using TaskManagementSystem.Models;
@@ -55,6 +56,7 @@ namespace TaskManagementSystem.Controllers
 
             return View();
         }
+        
 
         // POST: TaskCategoryController/Create
         [HttpPost]
@@ -71,15 +73,54 @@ namespace TaskManagementSystem.Controllers
 
         public IActionResult ViewTaskCategory()
         {
-            var taskCatogories = _context.TaskCategories.ToList();
 
-            foreach(var item in taskCatogories)
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+
+
+            if (User.IsInRole("Admin"))
             {
-                var managers = _context.Users.Find(item.ManagerId);
-                item.Manager = managers;
+
+                var taskCatogories = _context.TaskCategories.ToList();
+
+                foreach (var item in taskCatogories)
+                {
+                    var managers = _context.Users.Find(item.ManagerId);
+                    item.Manager = managers;
+                }
+
+                return View(taskCatogories);
+
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                var taskcategories = from cust in _context.TaskCategories
+                                     where cust.ManagerId == userId
+                                     select cust;
+
+                foreach (var item in taskcategories)
+                {
+                    var managers = _context.Users.Find(item.ManagerId);
+                    item.Manager = managers;
+
+                }
+                return View(taskcategories);
+
+            }
+            else
+            {
+                var TaskLists = _context.UsersTasks.Include(a => a.ApplicationUser).Include(a => a.Task)
+                    .Where(a => a.ApplicationUserId == userId)
+                    .Select(c => new TaskCategory()
+                    {
+                        Name = c.Task.TaskCategory.Name,
+                        Manager = c.Task.TaskCategory.Manager
+                    }).Distinct();
+
+                return View(TaskLists);
             }
 
-            return View(taskCatogories);
 
         }
 
@@ -128,35 +169,55 @@ namespace TaskManagementSystem.Controllers
                 var managers = _context.Users.Find(item.ManagerId);
                 item.Manager = managers;
             }
-            return View(categoryList);
+            //return View(categoryList);
+            return PartialView("_detailTaskCategory",categoryList);
+
 
         }
 
         // GET: TaskCategoryController/Delete/5
         // GET: Movies/Delete/5
+        
+        //public ActionResult Delete(int id)
+        //{
+        //    var taskCategory1 = _context.TaskCategories.Find(id);
+            
+        //    var taskCatogories = _context.TaskCategories.ToList();
+
+        //    foreach (var item in taskCatogories)
+        //    {
+        //        var managers = _context.Users.Find(item.ManagerId);
+        //        item.Manager = managers;
+        //    }
+        //    return View(taskCategory1);
+        //}
+
+
+
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
-        {
-            var taskCategory1 = _context.TaskCategories.Find(id);
-            var taskCatogories = _context.TaskCategories.ToList();
-
-            foreach (var item in taskCatogories)
-            {
-                var managers = _context.Users.Find(item.ManagerId);
-                item.Manager = managers;
-            }
-            return View(taskCategory1);
-        }
-
         // POST: Movies/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Delete(TaskCategory taskCategory)
+        public ActionResult Delete(int id)
         {
-            _context.TaskCategories.Remove(taskCategory);
-            _context.SaveChanges();
-            return RedirectToAction("ViewTaskCategory");
+            try
+            {
+                var taskCategory = _context.TaskCategories.Where(a => a.Id == id).FirstOrDefault();
+                _context.TaskCategories.Remove(taskCategory);
+                _context.SaveChanges();
+                //return RedirectToAction("ViewTaskCategory");
+
+                //TempData["Success"] = "Cateogry deleted successfully";
+                return Json(true);
+
+            }
+            catch
+            {
+                //ViewBag.ErrorMessage = "This category is linked with task hence cannot be deleted";
+                return Json(false);
+            }
+           
 
 
 

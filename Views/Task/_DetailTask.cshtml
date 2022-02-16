@@ -1,0 +1,92 @@
+﻿@model TaskManagementSystem.Models.Task
+
+
+<div class="detail-content-section">
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            TaskName
+        </h4>
+        <h4>@Model.TaskName</h4>
+    </div>
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            TaskDetails
+        </h4>
+        <h4>@Model.TaskDetails</h4>
+    </div>
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            CreatedDate
+        </h4>
+        <h4>@Model.CreatedDate</h4>
+    </div>
+
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            AssignedDate
+        </h4>
+        <h4>@Model.AssignedDate</h4>
+    </div>
+
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            DueDate
+        </h4>
+        <h4>@Model.DueDate</h4>
+    </div>
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            AssignedBy
+        </h4>
+        <h4>@Model.AssignedBy.UserName</h4>
+    </div>
+
+
+    @*<div class="detail-section">
+        <h4 class="detail-title">
+            AssignedTo
+        </h4>
+        <h4>@Model.AssignedTo</h4>
+    </div>*@
+
+    @*<ul class="detail-section>
+                @foreach (var items in item.AssignedTo)
+                {
+
+        <li>@items</li>}
+            </ul>*@
+
+
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            TaskCategory
+        </h4>
+        <h4>@Model.TaskCategory.Name</h4>
+    </div>
+
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            TaskStatus
+        </h4>
+        <h4>@Model.TaskStatus</h4>
+    </div>
+
+    <div class="detail-section">
+        <h4 class="detail-title">
+            TaskCompletedDate
+        </h4>
+        <h4>@Model.TaskCompletedDate</h4>
+    </div>
+
+
+</div>
+
+<script src="~/lib/jquery/jquery.min.js"></script>
