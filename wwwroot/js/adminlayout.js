@@ -93,23 +93,14 @@ const deletbtn = document.querySelectorAll(".delete-btn");
 deletbtn.forEach((eachbtn) => {
     eachbtn.addEventListener("click", (e) => {
         debugger
-        document.getElementByClassName('delete-catgegory')[0].setAttribute("id", e.currentTarget.dataset.id);
-
+        document.getElementsByClassName('delete-catgegory')[0].setAttribute("id", e.currentTarget.dataset.id);
         modal.style.display = "block";
     });
 });
-
-//deletbtn.forEach((eachbtn) => {
-//    eachbtn.addEventListener("click", () => {
-//        modal.style.display = "block";
-//    });
-//});
-
-
-
 //detailbtn.forEach((eachbtn) => {
 //    eachbtn.addEventListener("click", () => {
-//        modaldetail.style.display = "block";
+
+//     modaldetail.style.display = "block";
 //    });
 //});
 //clearfixcancelbtn.addEventListener("click", () => {
@@ -119,13 +110,10 @@ deletbtn.forEach((eachbtn) => {
 //clearfixcancelbtnn.addEventListener("click", () => {
 //    modaldetail.style.display = "none";
 //});
-
-
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
-    }
-    //else if (event.target == modaldetail) {
+    } /*else if (event.target == modaldetail) {*/
     //    modaldetail.style.display = "none";
     //}
 };

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -178,17 +179,21 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account
                 if (user.UserRoleId == "1")
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
-                } 
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Admin"));
+                }
                 else if (user.UserRoleId == "2")
                 {
                     await _userManager.AddToRoleAsync(user, "Manager");
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Manager"));
+
                 }
-                else 
+                else
                 {
                     await _userManager.AddToRoleAsync(user, "Employee");
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Employee"));
+
                 }
-                
-                
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

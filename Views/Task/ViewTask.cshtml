@@ -6,17 +6,16 @@
 
 @model IEnumerable<TaskManagementSystem.ViewModels.ListViewModel>
 
-
 @*@{ if (User.IsInRole("Admin"))
-                {
-                    Layout = "/Views/Shared/AdminDashboard.cshtml";
-                }
-                else
-                {
-                    Layout = "/Views/Shared/_Layout.cshtml";
-                }
+                    {
+                        Layout = "/Views/Shared/AdminDashboard.cshtml";
+                    }
+                    else
+                    {
+                        Layout = "/Views/Shared/_Layout.cshtml";
+                    }
 
-}*@
+    }*@
 
 <head>
     <meta charset="UTF-8">
@@ -39,23 +38,23 @@
 </head>
 <body>
     @*<p>
-        @Html.ActionLink("View All", "ViewTask")
+            @Html.ActionLink("View All", "ViewTask")
 
-        @using (Html.BeginForm("Search", "Task", FormMethod.Post))
-        {
-            <table>
-                <tr>
-                    <td>
-                        <input type="text" id="txtName" name="searchparam" placeholder="type here to search" />
-                    </td>
-                    <td>
-                        <input type="submit" id="btnSubmit" value="Search" />
-                    </td>
-                </tr>
-            </table>
-        }
+            @using (Html.BeginForm("Search", "Task", FormMethod.Post))
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" id="txtName" name="searchparam" placeholder="type here to search" />
+                        </td>
+                        <td>
+                            <input type="submit" id="btnSubmit" value="Search" />
+                        </td>
+                    </tr>
+                </table>
+            }
 
-    </p>*@
+        </p>*@
 
     <div class="userlist-list-section">
         <div class="userlist-list-header-section">
@@ -83,7 +82,7 @@
         @{int i = 1; }
         @foreach (var item in Model)
         {
-            if (item.Id != 1)
+            if (item.Id != 0)
             {
                 <div class="userlist-rowlist-section">
                     <div class="userlist-sn-value">@(i++)</div>
@@ -212,14 +211,15 @@
     </div>
 
 
-
-    <script src="/js/adminlayout.js"></script>
+    <script src="/Javascript/adminlayout.js"></script>
+    @*<script src="/js/adminlayout.js"></script>*@
 
 
     @*<script src="/js/site.js"></script>*@
 
     @*<script src="/Js/layout.js"></script>*@
 
+    @*<script src="/Javascript/adminlayout.js"></script>*@
     <script>
         $(".detail-btn").click(function () {
             id = this.id;
@@ -262,5 +262,5 @@
         });
 
     </script>
-
 </body>
+

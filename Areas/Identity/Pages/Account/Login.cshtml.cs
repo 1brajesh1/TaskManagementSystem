@@ -82,12 +82,25 @@ using Task = System.Threading.Tasks.Task;
 
             if (ModelState.IsValid)
             {
+                //    var user = new ApplicationUser
+                //    {
+
+                //        Email = Input.Email,
+                //        PasswordHash = Input.Password,
+
+
+                //    };
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var user = await _userManager.FindByEmailAsync(Input.Email);
+                //var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                var users = await _userManager.FindByEmailAsync(Input.Email);
                 //var password = await _userManager.CheckPasswordAsync(user, Input.Password);
 
-                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                var result = await _signInManager.PasswordSignInAsync(users, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

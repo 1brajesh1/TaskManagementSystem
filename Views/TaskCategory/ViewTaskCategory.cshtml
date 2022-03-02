@@ -38,7 +38,7 @@
                     <div class="userlist-edit-delete-value" style="padding: 0 0;">
                         <a class="edit-btn" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
                         @*<a class="detail-btn" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
-                        <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>*@
+                            <a class="delete-btn" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>*@
 
                         <a class="detail-btn" data-ajax="true" id="@item.Id"><i class="fas fa-info-circle"></i></a>
 
@@ -75,6 +75,8 @@
     </div>
     <!-- userlist-page-change-section end here -->
     @*<script src="/Js/layout.js"></script>*@
+
+
     <div id="myModal" class="modal">
 
         <!-- adduser section start here -->
@@ -125,7 +127,7 @@
     <script src="~/js/adminlayout.js"></script>
 
 </body>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/jquery.min.js"></script>
 
 <script>
     $(".detail-btn").click(function () {

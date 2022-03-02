@@ -93,7 +93,7 @@ namespace TaskManagementSystem.ViewModels
         //public List<ApplicationUser> AssignedTo { get; set; }
 
 
-        //public List<string> AssignedTo { get; set; }
+        
         [Display(Name = "Tasks Categories")]
         public int? TaskCategoryId { get; set; }
         public TaskCategory TaskCategory { get; set; }

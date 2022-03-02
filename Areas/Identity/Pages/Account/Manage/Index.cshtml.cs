@@ -46,7 +46,7 @@ namespace TaskManagementSystem.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
 
             [Display(Name = "Profile Picture")]
-            public byte[]? ProfilePicture { get; set; }
+            public byte[] ProfilePicture { get; set; }
 
 
         }

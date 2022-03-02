@@ -89,7 +89,14 @@ namespace TaskManagementSystem.ViewModels
 
         public List<SelectListItem> AssignedBy { get; set; }
 
-        
+
+        [Display(Name = "Tasks Categories")]
+        public int? TaskCategoriesId { get; set; }
+
+        public List<SelectListItem> TaskCategories { get; set; }
+
+
+
         public List<SelectListItem> AssignedTo { get; set; }
 
         [Display(Name = "Assigned To")]
@@ -99,10 +106,7 @@ namespace TaskManagementSystem.ViewModels
 
 
         //public List<string> AssignedTo { get; set; }
-        [Display(Name ="Tasks Categories")]
-        public int? TaskCategoriesId  { get; set; }
-
-        public List<SelectListItem> TaskCategories { get; set; }
+       
 
     }
 }

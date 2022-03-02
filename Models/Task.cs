@@ -63,13 +63,15 @@ namespace TaskManagementSystem.Models
         //public TaskCategory TaskCategory { get; set; }
 
         //[Required]
-        public List<ApplicationUser> AssignedTo { get; set; }
+        //public List<ApplicationUser> AssignedTo { get; set; }
 
         //public List<UsersTask> UserVsTasks { get; set; }
 
         //public ICollection<UsersTask> UserTasks { get; set; } = new HashSet<UsersTask>();
 
-        public ICollection<UsersTask> UserTasks { get; set; }
+        [Display(Name = "Assigned To")]
+        public ICollection<UsersTask>UserTasks { get; set; }
+
 
 
 

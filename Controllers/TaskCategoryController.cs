@@ -177,11 +177,11 @@ namespace TaskManagementSystem.Controllers
 
         // GET: TaskCategoryController/Delete/5
         // GET: Movies/Delete/5
-        
+
         //public ActionResult Delete(int id)
         //{
         //    var taskCategory1 = _context.TaskCategories.Find(id);
-            
+
         //    var taskCatogories = _context.TaskCategories.ToList();
 
         //    foreach (var item in taskCatogories)
@@ -193,12 +193,10 @@ namespace TaskManagementSystem.Controllers
         //}
 
 
-
         [Authorize(Roles = "Admin")]
-        // POST: Movies/Delete/5
+        // POST: TaskCategoryController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
+        //[ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             try
@@ -206,28 +204,17 @@ namespace TaskManagementSystem.Controllers
                 var taskCategory = _context.TaskCategories.Where(a => a.Id == id).FirstOrDefault();
                 _context.TaskCategories.Remove(taskCategory);
                 _context.SaveChanges();
-                //return RedirectToAction("ViewTaskCategory");
-
                 //TempData["Success"] = "Cateogry deleted successfully";
                 return Json(true);
-
             }
             catch
             {
                 //ViewBag.ErrorMessage = "This category is linked with task hence cannot be deleted";
                 return Json(false);
             }
-           
 
 
-
-
-        //    public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var taskdelete1 = await _context.TaskCategories.FindAsync(id);
-        //    _context.TaskCategories.Remove(taskdelete1);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("ViewTaskCategory");
         }
+
     }
 }

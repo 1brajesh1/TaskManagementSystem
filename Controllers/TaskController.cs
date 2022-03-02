@@ -129,7 +129,7 @@ namespace TaskManagementSystem.Controllers
 
         }
         
-        public IActionResult ViewTask()
+        public ActionResult ViewTask()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -425,31 +425,29 @@ namespace TaskManagementSystem.Controllers
                 return PartialView("_DetailTask", taskdetails);
 
             }
-       
 
 
-        // POST: TaskcontrollerDelete/5
+
+        // POST: TaskController/Delete/5
         [HttpPost]
-            //[ValidateAntiForgeryToken]
-            public ActionResult Delete(int id)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            try
             {
-                try
-                {
-                    var task = _context.Tasks.Where(a => a.Id == id).FirstOrDefault();
-                    _context.Tasks.Remove(task);
-                    _context.SaveChanges();
-                    //TempData["Success"] = "Cateogry deleted successfully";
-                    return Json(true);
-                }
-                catch
-                {
-                    //ViewBag.ErrorMessage = "This category is linked with task hence cannot be deleted";
-                    return Json(false);
-                }
-
-
-               
+                //var userTasks = _context.UsersTasks
+                var task = _context.Tasks.Include(u=>u.UserTasks).Where(a => a.Id == id).FirstOrDefault();
+                task.UserTasks.Clear();
+                _context.Tasks.Remove(task);
+                _context.SaveChanges();
+                //TempData["Success"] = "Cateogry deleted successfully";
+                return Json(true);
             }
-
+            catch(Exception ex)
+            {
+                //ViewBag.ErrorMessage = "This category is linked with task hence cannot be deleted";
+                return Json(false);
+            }
         }
     }
+}

@@ -44,6 +44,29 @@ namespace TaskManagementSystem.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ConcurrencyStamp = "2",
+                            Name = "Manager",
+                            NormalizedName = "Manager"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ConcurrencyStamp = "3",
+                            Name = "Employee",
+                            NormalizedName = "Employee"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -129,6 +152,13 @@ namespace TaskManagementSystem.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -204,9 +234,6 @@ namespace TaskManagementSystem.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -227,11 +254,28 @@ namespace TaskManagementSystem.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("TaskId");
-
                     b.HasIndex("UserRoleId");
 
                     b.ToTable("MyUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4819ed0a-e9f6-4203-aa64-266289ca4792",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF8v7YDy8k6ik0l2x76kJF+dfuWow3h1zti3z7Gz1Gj7YLmBXMICEygeU5LbKn5ENQ==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7cd497f1-5f1c-40f0-801b-2a97e3e8f23e",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Models.Task", b =>
@@ -370,10 +414,6 @@ namespace TaskManagementSystem.Migrations
 
             modelBuilder.Entity("TaskManagementSystem.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("TaskManagementSystem.Models.Task", null)
-                        .WithMany("AssignedTo")
-                        .HasForeignKey("TaskId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "UserRole")
                         .WithMany()
                         .HasForeignKey("UserRoleId");
@@ -406,13 +446,13 @@ namespace TaskManagementSystem.Migrations
                     b.HasOne("TaskManagementSystem.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserTasks")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("TaskManagementSystem.Models.Task", "Task")
                         .WithMany("UserTasks")
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
